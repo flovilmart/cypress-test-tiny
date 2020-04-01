@@ -21,3 +21,10 @@ import "./defaults"
 // Alternatively you can use CommonJS syntax:
 // require("./commands")
 // require("./defaults")
+beforeEach(() => {
+  cy.server({
+    onAnyRequest: (route, proxy) => {
+      cy.task('validateRequest', proxy.request.body).should('be', true);
+    },
+  });
+});
